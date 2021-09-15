@@ -13,6 +13,6 @@ $ docker run -it --link xlab_routingproject_xlab-routing_1:postgres --rm postgre
 osm2pgrouting configs
 
 ```
-cd osm2pgrouting/
+$ cd osm2pgrouting/
 $ osm2pgrouting -f ../data/osmc.osm -h localhost -U postgres -W postgres -d xlab-routing --conf=../data/mapconfig_for_cars.xml
 ```
