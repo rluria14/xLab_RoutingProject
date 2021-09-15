@@ -14,5 +14,5 @@ osm2pgrouting configs
 
 ```
 $ cd osm2pgrouting/
-$ osm2pgrouting -f ../data/osmc.osm -h localhost -U postgres -W postgres -d xlab-routing --conf=../data/mapconfig_for_cars.xml
+$ osm2pgrouting -f ../data/osmc.osm -h localhost -U postgres -W postgres -d xlab-routing --conf=mapconfig_for_cars.xml
 ```
