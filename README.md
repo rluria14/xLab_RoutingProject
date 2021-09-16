@@ -16,6 +16,7 @@ $ docker run -it --link xlab_routingproject_xlab-routing_1:postgres --rm postgre
   sh -c 'exec psql -h "$POSTGRES_PORT_5432_TCP_ADDR" -p "$POSTGRES_PORT_5432_TCP_PORT" -U postgres'
 ```
 
+
 ##Connect to existing database
 
 ##### Connect to RDS database
