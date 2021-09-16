@@ -10,6 +10,11 @@ $ docker run -it --link xlab_routingproject_xlab-routing_1:postgres --rm postgre
   sh -c 'exec psql -h "$POSTGRES_PORT_5432_TCP_ADDR" -p "$POSTGRES_PORT_5432_TCP_PORT" -U postgres'
 ```
 
+osm overpass api
+
+```http://overpass-api.de/api/map?way[bbox=36.15491910500003,-1.6056902019999484,37.914263872000035,0.2048727530000518][highway=*]```
+
+
 osm2pgrouting configs
 
 ```

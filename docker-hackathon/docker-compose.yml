@@ -1,0 +1,10 @@
+services:
+  postgres:
+    container_name: pgrouting-hackathon
+    build: .
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: 'hackathon_edit'
+      POSTGRES_PASSWORD: 'gHBubct9#^Uv5E9QWp'
+      POSTGRES_DB: routing

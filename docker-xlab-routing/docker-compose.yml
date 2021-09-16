@@ -1,6 +1,7 @@
 services:
-  xlab-routing:
-    build: 10.1-2.4-2.5/.
+  postgres:
+    container_name: xlab-routing
+    build: .
     ports:
       - "5432:5432"
     environment:
