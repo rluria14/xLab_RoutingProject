@@ -1,4 +1,5 @@
 # PGRouting 
+<br />
 
 ## Docker (if building local database)
 
@@ -15,7 +16,6 @@ docker-compose up -d
 $ docker run -it --link xlab_routingproject_xlab-routing_1:postgres --rm postgres \
   sh -c 'exec psql -h "$POSTGRES_PORT_5432_TCP_ADDR" -p "$POSTGRES_PORT_5432_TCP_PORT" -U postgres'
 ```
-<br />
 <br />
 
 ## Connect to existing database
