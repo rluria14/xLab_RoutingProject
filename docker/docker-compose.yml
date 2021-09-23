@@ -4,7 +4,9 @@ services:
 
   postgres:
     container_name: xlab-routing
-    build: docker-entrypoint-initdb.d/.
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
       - ./data:/var/lib/postgresql/data/pgdata_docker_vol:rw
       - ./conf/postgresql.conf:/etc/postgresql/postgresql.conf
