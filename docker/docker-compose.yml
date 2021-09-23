@@ -1,0 +1,20 @@
+version: '3.5'
+
+services:
+
+  postgres:
+    container_name: xlab-routing
+    build: docker-entrypoint-initdb.d/.
+    volumes:
+      - ./data:/var/lib/postgresql/data/pgdata_docker_vol:rw
+      - ./conf/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    command:
+      postgres -c config_file=/etc/postgresql/postgresql.conf
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: xlab-routing
+      PGDATA: /var/lib/postgresql/data/pgdata_docker_vol
