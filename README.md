@@ -1,26 +1,35 @@
 # PGRouting 
 <br />
 
-## Docker (if building local database)
-
-##### Run docker-compose
+##### Run xlab-routing database
 
 ```
-cd docker-xlab-routing
+cd docker
 docker-compose up -d
 ```
 
-##### Connect to database container
+##### Exporting the database
+If changes have been made to that data like adding tables or data
+then the data should be exported with the following
+`pg_dump -F t -d xlab-routing -h localhost -U postgres > routing.dump`
+with the dump file being placed in the `docker-entrypoint-initdb.d`
+directory
+
+##### Refreshing the database
+If someone else has made changes to the initial dataset the it can
+be imported by the following
+1. `docker compose down`
+1. `rm -rf ./data/*`
+1. `docker compose up -d`
+
+##### Connect to database container via psql cmd line
 
 ```bash
 $ docker run -it --link xlab_routingproject_xlab-routing_1:postgres --rm postgres \
   sh -c 'exec psql -h "$POSTGRES_PORT_5432_TCP_ADDR" -p "$POSTGRES_PORT_5432_TCP_PORT" -U postgres'
 ```
-<br />
 
-## Connect to existing database
-
-##### Connect to RDS database
+##### Connect to an RDS database
 
 ```
 $ psql --host=*******.us-east-1.rds.amazonaws.com --username=****** --dbname=routing
@@ -30,7 +39,7 @@ $ psql --host=*******.us-east-1.rds.amazonaws.com --username=****** --dbname=rou
 ##### Download osm data with osm overpass api (kenya aoi)
 
 ```
-http://overpass-api.de/api/map?way[bbox=36.15491910500003,-1.6056902019999484, 
+http://overpass-api.de/api/xapi?way[bbox=36.15491910500003,-1.6056902019999484, 
 37.914263872000035,0.2048727530000518][highway=*]
 ```
 

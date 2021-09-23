@@ -3,3 +3,4 @@ Manna/*
 .ipynb_checkpoints
 .idea
 __pychache__/*
+docker/data/*
