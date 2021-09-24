@@ -15,7 +15,8 @@ FROM
          target,
          cost_s AS cost,
          reverse_cost_s AS reverse_cost
-        FROM ways',
+        FROM ways
+        WHERE not st_dwithin(ways.the_geom, st_makepoint(37.1419,-0.4869)::geography, 1000)',
     51934, 208683,
     directed := true)
 ) s
