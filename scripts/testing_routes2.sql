@@ -19,7 +19,7 @@ LEFT JOIN
   hgis_admin3 AS h
 ON
   st_intersects(w.the_geom,h.shape)
-AND h.adm3_name = 'Kitisuru'
+AND h.adm3_name = 'Kitisuru'  --If you want to get specific
 WHERE h.objectid IS NULL
 
 
