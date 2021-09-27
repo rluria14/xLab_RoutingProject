@@ -5,7 +5,8 @@ SELECT
 FROM
   ways AS w
 LEFT JOIN
-  hgis_bridges_tunnels AS h ON
+  hgis_bridges_tunnels AS h
+ON
   st_dwithin(w.the_geom,h.shape, .0001)
 WHERE h.objectid IS NULL;
 
