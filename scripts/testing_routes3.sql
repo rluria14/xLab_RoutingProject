@@ -5,7 +5,7 @@ FROM
 FROM
     pgr_nogo_astar(
         'SELECT gid AS id, source, target, cost, reverse_cost, x1, y1, x2, y2, the_geom AS geom FROM ways',
-        (SELECT shape FROM hgis_admin3 WHERE adm3_name = 'Kitisuru'),
+        (SELECT ST_UNION(shape) FROM hgis_admin3 WHERE adm3_name = 'Kitisuru'),
         63169,
         67860,
         TRUE,
