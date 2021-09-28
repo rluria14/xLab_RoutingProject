@@ -28,7 +28,7 @@ def route_nogo(nogo_layer, long_s, lat_s, long_t, lat_t, nogo_layer_query=""):
     target = fetch_all(pool, t_query)[0]
     print(target['id'])
     route_query = '''
-    SELECT ST_UNION(b.the_geom) AS geojson
+    SELECT ST_UNION(b.the_geom) AS geojson, SUM(b.length_m) AS length
 FROM
 (SELECT
 *
@@ -47,9 +47,9 @@ LEFT JOIN ways b
 ON (b.gid = s.edge)
 WHERE the_geom is not NULL'''.format(nogo_layer, nogo_layer_query, source['id'], target['id'])
     route = fetch_all(pool, route_query)[0]
-    return route['geojson']
+    return route['geojson'], route['length']
 
-# print(route_nogo('hgis_admin3', 36.79718, -1.24822, 36.730310, -1.216682, "WHERE adm3_name = 'Kitisuru'"))
+print(route_nogo('hgis_admin3', 36.79718, -1.24822, 36.730310, -1.216682, "WHERE adm3_name = 'Kitisuru'"))
 
 def route_nogo_withindistance(nogo_layer, long_s, lat_s, long_t, lat_t, nogo_layer_query=""):
     s_geom = 'POINT({} {})'.format(long_s, lat_s)
@@ -62,7 +62,7 @@ def route_nogo_withindistance(nogo_layer, long_s, lat_s, long_t, lat_t, nogo_lay
     target = fetch_all(pool, t_query)[0]
     print(target['id'])
     route_query = '''
-    SELECT ST_UNION(b.the_geom) AS geojson
+    SELECT ST_UNION(b.the_geom) AS geojson, SUM(b.length_m) AS length
 FROM
 (SELECT
 *
@@ -81,6 +81,6 @@ LEFT JOIN ways b
 ON (b.gid = s.edge)
 WHERE the_geom is not NULL'''.format(nogo_layer, nogo_layer_query, source['id'], target['id'])
     route = fetch_all(pool, route_query)[0]
-    return route['geojson']
+    return route['geojson'], route['length']
 
-print(route_nogo('hgis_bridges_tunnels', 36.79718, -1.24822, 36.730310, -1.216682))
+# print(route_nogo_withindistance('hgis_bridges_tunnels', 36.7749665,-1.2681415, 36.730310, -1.216682))
