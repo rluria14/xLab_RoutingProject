@@ -4,3 +4,4 @@ Manna/*
 .idea
 __pychache__/*
 docker/data/*
+scripts/__pycache__/
