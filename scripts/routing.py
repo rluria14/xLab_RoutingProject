@@ -37,7 +37,10 @@ def route_nogo(nogo_layers_list, long_s, lat_s, long_t, lat_t, nogo_layer_query_
         else:
             layer = f'ST_FORCE2D({geom_colname}) as shape FROM {key}'
         nogo_query += layer
-        nogo_query += f" WHERE {value}"
+        if value != "":
+            nogo_query += f" WHERE {value}"
+        else:
+            pass
         if key != nogo_layers_list[-1]:
             nogo_query += " UNION SELECT "
         else:
