@@ -18,7 +18,7 @@ pool = get_conn_pool({
 })
 
 ## avoid polygon
-def route_nogo(nogo_layers_list, long_s, lat_s, long_t, lat_t, nogo_layer_query_list=""):
+def route_nogo(nogo_layers_list, long_s, lat_s, long_t, lat_t, nogo_layer_query_list="", nogo_pt_buff=.0005, nogo_ln_buff=.0001):
     s_geom = 'POINT({} {})'.format(long_s, lat_s)
     t_geom = 'POINT({} {})'.format(long_t, lat_t)
 
@@ -31,9 +31,9 @@ def route_nogo(nogo_layers_list, long_s, lat_s, long_t, lat_t, nogo_layer_query_
         geom_type = geom_field['type']
         geom_colname = geom_field['f_geometry_column']
         if geom_type == "POINT":
-            layer = f'ST_FORCE2D(ST_BUFFER({geom_colname}, .0005)) as shape FROM {key}'
+            layer = f'ST_FORCE2D(ST_BUFFER({geom_colname}, {nogo_pt_buff})) as shape FROM {key}'
         elif geom_type == "MULTILINESTRING":
-            layer = f'ST_FORCE2D(ST_BUFFER({geom_colname}, .0001)) as shape FROM {key}'
+            layer = f'ST_FORCE2D(ST_BUFFER({geom_colname}, {nogo_ln_buff})) as shape FROM {key}'
         else:
             layer = f'ST_FORCE2D({geom_colname}) as shape FROM {key}'
         nogo_query += layer
@@ -180,5 +180,5 @@ WHERE the_geom is not NULL'''.format(source['id'], target['id'])
     return route['geojson'], route['length']
 
 #print(route_nogo_withindistance('hgis_bridges_tunnels', 36.7749665,-1.2681415, 36.730310, -1.216682))
-print(route_nogo(['hgis_admin3', 'hgis_bridges_tunnels'], 36.751293, -1.271346, 36.726833, -1.190509, ["hgis_admin3.adm3_name = 'Kitisuru'", "hgis_bridges_tunnels.objectid = 810 OR hgis_bridges_tunnels.objectid = 811"]))
+#print(route_nogo(['hgis_admin3', 'hgis_bridges_tunnels'], 36.751293, -1.271346, 36.726833, -1.190509, ["hgis_admin3.adm3_name = 'Kitisuru'", "hgis_bridges_tunnels.objectid = 810 OR hgis_bridges_tunnels.objectid = 811"]))
 # print(route_standard(36.751293, -1.271346, 36.726833, -1.190509))

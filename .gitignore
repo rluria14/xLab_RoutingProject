@@ -1,6 +1,7 @@
 data_osm/*
 Manna/*
 .ipynb_checkpoints
+notebook/.ipynb_checkpoints
 .idea
 __pychache__/*
 docker/data/*
