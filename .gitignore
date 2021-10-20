@@ -5,3 +5,4 @@ Manna/*
 __pychache__/*
 docker/data/*
 scripts/__pycache__/
+docker/docker-entrypoint-initdb.d/nairobi-routing.dump
