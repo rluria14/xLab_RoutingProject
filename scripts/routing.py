@@ -59,7 +59,7 @@ def route_nogo(nogo_layers_list, long_s, lat_s, long_t, lat_t, nogo_layer_query_
  	ORDER BY v.the_geom <-> ST_GeometryFromText('{s_geom}',4326) LIMIT 1
     '''
     source = fetch_all(pool, s_query)[0]
-    print(source['id'])
+    print("START NODE: ", source['id'])
 
     # GET ENDING POINT
     #t_query = f"SELECT id FROM ways_vertices_pgr ORDER BY the_geom <-> ST_GeometryFromText('{t_geom}',4326) LIMIT 1"
@@ -72,11 +72,11 @@ def route_nogo(nogo_layers_list, long_s, lat_s, long_t, lat_t, nogo_layer_query_
  	ORDER BY v.the_geom <-> ST_GeometryFromText('{t_geom}',4326) LIMIT 1
     '''
     target = fetch_all(pool, t_query)[0]
-    print(target['id'])
+    print("END NODE: ", target['id'])
 
     # GET ROUTE
     route_query = f'''
-    SELECT ST_UNION(b.the_geom) AS geojson, SUM(b.length_m) AS length
+    SELECT ST_ASTEXT(ST_UNION(b.the_geom)) AS geojson, SUM(b.length_m) AS length
 FROM
 (SELECT
 *
@@ -159,7 +159,7 @@ def route_standard(long_s, lat_s, long_t, lat_t):
     print(target['id'])
 
     route_query = '''
-    SELECT ST_UNION(b.the_geom) AS geojson, SUM(b.length_m) AS length
+    SELECT ST_ASTEXT(ST_UNION(b.the_geom)) AS geojson, SUM(b.length_m) AS length
 FROM
 (SELECT
 *
