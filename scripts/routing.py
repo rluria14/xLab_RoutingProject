@@ -180,5 +180,5 @@ WHERE the_geom is not NULL'''.format(source['id'], target['id'])
     return route['geojson'], route['length']
 
 #print(route_nogo_withindistance('hgis_bridges_tunnels', 36.7749665,-1.2681415, 36.730310, -1.216682))
-print(route_nogo(['hgis_admin3', 'hgis_bridges_tunnels'], 36.751293, -1.271346, 36.726833, -1.190509, ["hgis_admin3.adm3_name = 'Kitisuru'", "hgis_bridges_tunnels.objectid = 810 OR hgis_bridges_tunnels.objectid = 811"]))
+#print(route_nogo(['hgis_admin3', 'hgis_bridges_tunnels'], 36.751293, -1.271346, 36.726833, -1.190509, ["hgis_admin3.adm3_name = 'Kitisuru'", "hgis_bridges_tunnels.objectid = 810 OR hgis_bridges_tunnels.objectid = 811"]))
 # print(route_standard(36.751293, -1.271346, 36.726833, -1.190509))
