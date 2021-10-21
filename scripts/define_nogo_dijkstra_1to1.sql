@@ -5,6 +5,7 @@
 CREATE OR REPLACE FUNCTION pgr_nogo_dijkstra(
 	edges_sql TEXT,
 	nogo_geom GEOMETRY,
+	nogo_cost FLOAT,
 	start_vid BIGINT,
 	end_vid BIGINT,
 	directed BOOLEAN,
@@ -49,8 +50,8 @@ AS (
 		edges_table.id AS id,
 		edges_table.source AS source,
 		edges_table.target AS target,
-		'INFINITY' AS cost,
-		'INFINITY' AS reverse_cost
+		nogo_cost AS cost,
+		nogo_cost AS reverse_cost
 	FROM
 		edges_table
 	WHERE

@@ -18,7 +18,7 @@ pool = get_conn_pool({
 })
 
 ## avoid polygon
-def route_nogo(nogo_layers_list, long_s, lat_s, long_t, lat_t, nogo_layer_query_list="", nogo_pt_buff=.0005, nogo_ln_buff=.0001):
+def route_nogo(nogo_layers_list, long_s, lat_s, long_t, lat_t, nogo_layer_query_list="", nogo_pt_buff=.0005, nogo_ln_buff=.0001, nogo_cost=-1):
     s_geom = 'POINT({} {})'.format(long_s, lat_s)
     t_geom = 'POINT({} {})'.format(long_t, lat_t)
 
@@ -84,6 +84,7 @@ FROM
     pgr_nogo_dijkstra(
         'SELECT gid AS id, source, target, cost, reverse_cost, x1, y1, x2, y2, the_geom AS geom FROM ways',
         ({nogo_query}),
+        {nogo_cost},
         {source['id']},
         {target['id']},
         TRUE
