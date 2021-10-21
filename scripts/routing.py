@@ -81,15 +81,12 @@ FROM
 (SELECT
 *
 FROM
-    pgr_nogo_astar(
+    pgr_nogo_dijkstra(
         'SELECT gid AS id, source, target, cost, reverse_cost, x1, y1, x2, y2, the_geom AS geom FROM ways',
         ({nogo_query}),
         {source['id']},
         {target['id']},
-        TRUE,
-        5,
-        1.0,
-        1.0
+        TRUE
     )) s
 LEFT JOIN ways b
 ON (b.gid = s.edge)
