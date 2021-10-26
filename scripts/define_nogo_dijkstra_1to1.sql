@@ -4,6 +4,7 @@
 
 CREATE OR REPLACE FUNCTION pgr_nogo_dijkstra(
 	edges_sql TEXT,
+	noise DECIMAL,
 	nogo_geom GEOMETRY,
 	nogo_cost DECIMAL,
 	start_vid BIGINT,
@@ -37,8 +38,8 @@ AS (
 		edges_table.id AS id,
 		edges_table.source AS source,
 		edges_table.target AS target,
-		edges_table.cost AS cost,
-		edges_table.reverse_cost AS reverse_cost
+		edges_table.cost + (((random() * 2) - 1) * noise * edges_table.cost) AS cost,
+		edges_table.reverse_cost + (((random() * 2) - 1) * noise * edges_table.reverse_cost) AS reverse_cost
 	FROM
 		edges_table
 	WHERE
@@ -50,8 +51,8 @@ AS (
 		edges_table.id AS id,
 		edges_table.source AS source,
 		edges_table.target AS target,
-		edges_table.cost*nogo_cost AS cost,
-		edges_table.reverse_cost*nogo_cost AS reverse_cost
+		nogo_cost AS cost,
+		nogo_cost AS reverse_cost
 	FROM
 		edges_table
 	WHERE
