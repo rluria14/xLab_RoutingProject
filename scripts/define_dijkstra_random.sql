@@ -2,11 +2,9 @@
 /* ===== DIJKSTRA 1 TO 1 DEFINITION ======================================== */
 /* ========================================================================= */
 
-CREATE OR REPLACE FUNCTION pgr_nogo_dijkstra(
+CREATE OR REPLACE FUNCTION pgr_dijkstra_random(
 	edges_sql TEXT,
 	noise DECIMAL,
-	nogo_geom GEOMETRY,
-	nogo_cost DECIMAL,
 	start_vid BIGINT,
 	end_vid BIGINT,
 	directed BOOLEAN,
@@ -25,14 +23,14 @@ $$
 BEGIN
 
 DROP TABLE IF EXISTS edges_table;
-DROP TABLE IF EXISTS edges_table_nogo;
+DROP TABLE IF EXISTS edges_table_random;
 
 /* Intercept the edges table that the pgr routing algorithm would normally work on, but make sure we have the geometry, too. */
 EXECUTE 'CREATE TEMPORARY TABLE edges_table AS (' || edges_sql || ');';
 
-/* Replace the cost columns with infinity where the geom intersects the nogo geom. */
+/* Replace the cost columns with random cost */
 CREATE TEMPORARY TABLE
-	edges_table_nogo
+	edges_table_random
 AS (
 	SELECT
 		edges_table.id AS id,
@@ -42,22 +40,6 @@ AS (
 		edges_table.reverse_cost + (((random() * 2) - 1) * noise * edges_table.reverse_cost) AS reverse_cost
 	FROM
 		edges_table
-	WHERE
-		NOT ST_Intersects(nogo_geom, edges_table.geom)
-
-	UNION ALL
-
-	SELECT
-		edges_table.id AS id,
-		edges_table.source AS source,
-		edges_table.target AS target,
-		nogo_cost AS cost,
-		nogo_cost AS reverse_cost
-	FROM
-		edges_table
-	WHERE
-		ST_Intersects(nogo_geom, edges_table.geom)
-
 );
 
 /* Now run the pgr routing algorithm on the updated table & return the result. */
@@ -66,7 +48,7 @@ RETURN QUERY (
 		*
 	FROM
 		pgr_dijkstra(
-			'SELECT id, source, target, cost, reverse_cost FROM edges_table_nogo;',
+			'SELECT id, source, target, cost, reverse_cost FROM edges_table_random;',
 			start_vid,
 			end_vid,
 			directed
