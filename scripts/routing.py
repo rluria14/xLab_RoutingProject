@@ -18,7 +18,7 @@ pool = get_conn_pool({
 })
 
 ## avoid polygon
-def route_nogo(nogo_layers_list, long_s, lat_s, long_t, lat_t, nogo_layer_query_list="", nogo_pt_buff=.0005, nogo_ln_buff=.0001, nogo_cost=1000000000, noise=0):
+def route_nogo(nogo_layers_list, long_s, lat_s, long_t, lat_t, nogo_layer_query_list="", nogo_pt_buff=.0005, nogo_ln_buff=.0001, nogo_cost='INFINITY', noise=0):
     s_geom = 'POINT({} {})'.format(long_s, lat_s)
     t_geom = 'POINT({} {})'.format(long_t, lat_t)
 

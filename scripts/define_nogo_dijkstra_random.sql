@@ -6,7 +6,7 @@ CREATE OR REPLACE FUNCTION pgr_nogo_dijkstra_random(
 	edges_sql TEXT,
 	noise DECIMAL,
 	nogo_geom GEOMETRY,
-	nogo_cost DECIMAL,
+	nogo_cost FLOAT,
 	start_vid BIGINT,
 	end_vid BIGINT,
 	directed BOOLEAN,
